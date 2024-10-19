@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AccountsService } from 'src/app/services/accounts.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 @Component({
@@ -18,7 +20,9 @@ export default class AuthSignupComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private accountService: AccountsService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -40,9 +44,14 @@ export default class AuthSignupComponent implements OnInit {
 
     // send the form data to the server
     this.isSubmitting = true;
-    this.http.post('https://ics-server.azurewebsites.net/api/accounts', this.formGroup.value).subscribe({
-      next: (data) => {
+    const payload = {
+      email: this.formGroup.value.email,
+      password: this.formGroup.value.password
+    };
+    this.accountService.createAccount(payload).subscribe({
+      next: (_) => {
         this.isSubmitting = false;
+        this.toastrService.success('Account created successfully');
         // check if the redirect url is outside the app
         if (/^(http|https):\/\//.test(this.redirect)) {
           window.location.href = this.redirect;
@@ -52,7 +61,12 @@ export default class AuthSignupComponent implements OnInit {
       },
       error: (error) => {
         this.isSubmitting = false;
-        console.log(error);
+        // check if error status is 409
+        if (error.status === 409) {
+          this.toastrService.error('Email already exists');
+        } else {
+          this.toastrService.error('An error occurred');
+        }
       }
     });
   }

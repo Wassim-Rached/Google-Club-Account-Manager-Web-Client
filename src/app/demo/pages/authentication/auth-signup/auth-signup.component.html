@@ -36,7 +36,10 @@
             </label>
           </div>
         </div>
-        <button class="btn btn-primary shadow-2 mb-4" [disabled]="!formGroup.valid">Sign up</button>
+        <button class="btn btn-primary shadow-2 mb-4" [disabled]="!formGroup.valid || isSubmitting">
+          <span *ngIf="isSubmitting">Creating...</span>
+          <span *ngIf="!isSubmitting">Sign up</span>
+        </button>
         <p class="mb-0 text-muted">
           Already have an account?
           <a [routerLink]="['/auth/signin']">Log in</a>

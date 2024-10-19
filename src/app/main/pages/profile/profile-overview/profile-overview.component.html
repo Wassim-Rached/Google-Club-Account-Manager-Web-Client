@@ -1,0 +1,63 @@
+<app-not-found *ngIf="account === null; else page" />
+
+<ng-template #loading>
+  <div class="progress-bar">
+    <div class="progress-bar-value"></div>
+  </div>
+</ng-template>
+
+<ng-template #page>
+  <ng-container *ngIf="account; else loading">
+    <div class="profile-overview">
+      <div class="profile-header text-center mb-4">
+        <img [src]="account.photoUrl" alt="Profile Photo" class="profile-photo rounded-circle mb-3" style="width: 150px; height: 150px" />
+        <h4>
+          {{ account.email }}
+          <i *ngIf="account.isEmailVerified" class="fa fa-check-circle text-success"></i>
+        </h4>
+        <p>Joined on: {{ account.createdAt | date }}</p>
+        <p>
+          Membership: {{ account.isMember ? 'Member' : 'Non-Member' }}
+          <i *ngIf="account.isMember" class="fa fa-star text-warning"></i>
+        </p>
+      </div>
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="mb-3">Actions</h5>
+            <ul class="nav nav-tabs mb-3" ngbNav #nav="ngbNav">
+              <li class="nav-item" [ngbNavItem]="1">
+                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Change Password</a>
+                <ng-template ngbNavContent>
+                  <app-change-password />
+                </ng-template>
+              </li>
+              <li class="nav-item" [ngbNavItem]="2">
+                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Edit Profile</a>
+                <ng-template ngbNavContent>
+                  <app-edit-profile [account]="account" />
+                </ng-template>
+              </li>
+              <li class="nav-item" [ngbNavItem]="3">
+                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Request verification</a>
+                <ng-template ngbNavContent>
+                  <p class="mb-0">
+                    request verification
+                    <i *ngIf="account.isEmailVerified" class="fa fa-check-circle text-success"></i>
+                  </p>
+                </ng-template>
+              </li>
+            </ul>
+            <div [ngbNavOutlet]="nav"></div>
+          </div>
+        </div>
+      </div>
+      <div class="authorities">
+        <h3>Authorities</h3>
+        <ul>
+          <li *ngFor="let authority of authorities">{{ authority }}</li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

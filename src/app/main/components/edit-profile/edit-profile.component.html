@@ -1,0 +1,32 @@
+<form [formGroup]="formGroup" (ngSubmit)="editProfile()" class="container mt-4">
+  <div class="form-group">
+    <label for="photoUrl">Photo URL:</label>
+    <input
+      id="photoUrl"
+      type="text"
+      formControlName="photoUrl"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': formGroup.get('photoUrl').invalid && formGroup.get('photoUrl').touched }"
+    />
+    <div *ngIf="formGroup.get('photoUrl').invalid && formGroup.get('photoUrl').touched" class="invalid-feedback">Photo URL is required</div>
+  </div>
+
+  <!-- Image Preview -->
+  <div class="form-group mt-3">
+    <img
+      *ngIf="formGroup.get('photoUrl').value"
+      [src]="formGroup.get('photoUrl').value"
+      alt="Image Preview"
+      class="img-thumbnail"
+      style="max-width: 200px"
+    />
+  </div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <button type="button" (click)="resetToDefault()" class="btn btn-secondary">Return to Default</button>
+    <button type="submit" [disabled]="isSubmitting || !formGroup.valid" class="btn btn-primary d-flex align-items-center">
+      <span>{{ isSubmitting ? 'Updating Profile...' : 'Update Profile' }}</span>
+      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
+</form>

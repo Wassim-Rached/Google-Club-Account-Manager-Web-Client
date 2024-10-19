@@ -12,6 +12,18 @@ const routes: Routes = [
       {
         path: 'signup',
         loadComponent: () => import('./auth-signup/auth-signup.component')
+      },
+      {
+        path: 'resend-email-verification',
+        loadComponent: () => import('./auth-resend-email-verification/auth-resend-email-verification.component')
+      },
+      {
+        path: 'confirm-email-verification',
+        loadComponent: () => import('./auth-confirm-email-verification/auth-confirm-email-verification.component')
+      },
+      {
+        path: '**',
+        redirectTo: 'signin'
       }
     ]
   }

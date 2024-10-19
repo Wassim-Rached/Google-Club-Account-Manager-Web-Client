@@ -1,0 +1,35 @@
+<div class="auth-wrapper">
+  <div class="auth-content">
+    <div class="auth-bg">
+      <span class="r"></span>
+      <span class="r s"></span>
+      <span class="r s"></span>
+      <span class="r"></span>
+    </div>
+    <form class="card" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <div class="card-body text-center">
+        <div class="mb-4">
+          <i class="feather icon-mail auth-icon"></i>
+        </div>
+        <h3 class="mb-4">Resend Email Verification</h3>
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Email" formControlName="email" />
+        </div>
+        <button class="btn btn-primary mb-4" [disabled]="!formGroup.valid || isSubmitting">
+          {{ isSubmitting ? 'Sending...' : 'Resend Email' }}
+        </button>
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          {{ errorMessage }}
+        </div>
+        <p class="mb-2 text-muted">
+          Remembered your password?
+          <a [routerLink]="['/auth/signin']">Signin</a>
+        </p>
+        <p class="mb-0 text-muted">
+          Don’t have an account?
+          <a [routerLink]="['/auth/signup']">Sign up</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

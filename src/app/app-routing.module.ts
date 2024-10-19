@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
+import { RequireAuthGuard } from './guards/AuthGuard';
+import { RequireUnAuthGuard } from './guards/UnAuthGuard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [RequireAuthGuard],
     children: [
       {
         path: '',
@@ -16,6 +19,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./demo/dashboard/dashboard.component')
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./main/pages/profile/profile.module').then((m) => m.ProfileModule)
       },
       {
         path: 'basic',
@@ -45,6 +52,7 @@ const routes: Routes = [
     children: [
       {
         path: 'auth',
+        canActivate: [RequireUnAuthGuard],
         loadChildren: () => import('./demo/pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
       }
     ]

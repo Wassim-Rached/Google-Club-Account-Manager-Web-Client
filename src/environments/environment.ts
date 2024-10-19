@@ -8,8 +8,9 @@ export const environment = {
   appVersion: packageInfo.version,
   production: true,
   cas: 'https://cas-server.azurewebsites.net',
-  // ics: 'https://ics-server.azurewebsites.net',
+  // cas: 'http://localhost:3001',
   ics: 'http://localhost:8080',
+  // ics: 'https://ics-server.azurewebsites.net',
 
   defaultPhotoUrl: 'assets/images/user/avatar-2.jpg'
 };

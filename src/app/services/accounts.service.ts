@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 export interface Account {
@@ -32,7 +32,14 @@ export class AccountsService {
   }
 
   getMyAccount(isDetailed: boolean = false): Observable<Account> {
-    return this.http.get<Account>(`${environment.ics}/api/accounts/me?isDetailed=${isDetailed}`);
+    return this.http.get<Account>(`${environment.ics}/api/accounts/me?isDetailed=${isDetailed}`).pipe(
+      map((account) => {
+        if (!account.photoUrl) {
+          account.photoUrl = environment.defaultPhotoUrl;
+        }
+        return account;
+      })
+    );
   }
 
   verifyEmail(token: string): Observable<string> {

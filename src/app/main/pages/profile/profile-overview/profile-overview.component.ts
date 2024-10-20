@@ -14,7 +14,6 @@ import { EditProfileComponent } from '../../../components/edit-profile/edit-prof
 })
 export class ProfileOverviewComponent implements OnInit {
   account?: Account;
-  defaultAvatar = environment.defaultPhotoUrl;
 
   constructor(private accountService: AccountsService) {}
 
@@ -22,10 +21,6 @@ export class ProfileOverviewComponent implements OnInit {
     this.accountService.getMyAccount(true).subscribe({
       next: (account) => {
         this.account = account;
-        if (!account.photoUrl) {
-          this.account.photoUrl = this.defaultAvatar;
-        }
-        this.account.isMember = true;
       },
       error: (error) => {
         this.account = null;

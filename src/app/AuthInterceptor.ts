@@ -41,7 +41,6 @@ export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, ne
           break;
         case 500:
           toastrService.error('Something went wrong');
-          console.error('something went wrong');
           break;
         case 0:
           const serverName = getServerNameByUrl(error.url);

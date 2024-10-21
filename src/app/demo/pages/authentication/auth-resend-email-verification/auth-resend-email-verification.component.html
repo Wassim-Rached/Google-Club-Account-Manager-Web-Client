@@ -18,8 +18,13 @@
         <button class="btn btn-primary mb-4" [disabled]="!formGroup.valid || isSubmitting">
           {{ isSubmitting ? 'Sending...' : 'Resend Email' }}
         </button>
-        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-          {{ errorMessage }}
+        <div
+          *ngIf="message"
+          [ngClass]="{ 'alert-danger': message.type === 'F', 'alert-success': message.type === 'S' }"
+          class="alert"
+          role="alert"
+        >
+          {{ message.value }}
         </div>
         <p class="mb-2 text-muted">
           Remembered your password?

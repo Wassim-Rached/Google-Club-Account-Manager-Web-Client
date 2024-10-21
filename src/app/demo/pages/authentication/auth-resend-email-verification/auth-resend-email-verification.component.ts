@@ -14,7 +14,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 export default class AuthResendEmailVerificationComponent implements OnInit {
   formGroup: FormGroup;
   isSubmitting = false;
-  errorMessage: string | null = null;
+  message: { type: 'S' | 'F'; value: string } | null = null;
 
   constructor(private accountService: AccountsService) {}
 
@@ -33,12 +33,12 @@ export default class AuthResendEmailVerificationComponent implements OnInit {
     this.accountService.resendEmailVerificationToken(email).subscribe({
       next: (_) => {
         this.isSubmitting = false;
-        this.errorMessage = 'Email verification token has been sent';
+        this.message = { type: 'S', value: 'Email verification token has been sent' };
       },
       error: (error) => {
         console.error(error);
         const message = error.error;
-        this.errorMessage = message || 'An error occurred';
+        this.message = { type: 'F', value: message || 'An error occurred' };
         this.isSubmitting = false;
       }
     });

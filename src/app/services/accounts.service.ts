@@ -47,20 +47,27 @@ export class AccountsService {
   }
 
   resendEmailVerificationToken(email: string): Observable<string> {
-    return this.http.post<string>(`${environment.ics}/api/accounts/verify-email/resend?email=${email}`, null);
+    return this.http.post<string>(`${environment.ics}/api/accounts/verify-email/resend?email=${email}`, null, {
+      responseType: 'text' as 'json'
+    });
   }
 
   requestResetPassword(email: string): Observable<string> {
     return this.http.post<string>(`${environment.ics}/api/accounts/reset-password/request`, null, {
-      params: { email }
+      params: { email },
+      responseType: 'text' as 'json'
     });
   }
 
   confirmResetPassword(token: string, newPassword: string): Observable<string> {
-    return this.http.post<string>(`${environment.ics}/api/accounts/reset-password/confirm`, {
-      token,
-      newPassword
-    });
+    return this.http.post<string>(
+      `${environment.ics}/api/accounts/reset-password/confirm`,
+      {
+        token,
+        newPassword
+      },
+      { responseType: 'text' as 'json' }
+    );
   }
 
   changePassword({ oldPassword, newPassword }: { oldPassword: string; newPassword: string }): Observable<string> {

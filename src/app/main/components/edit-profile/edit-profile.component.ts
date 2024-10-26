@@ -27,7 +27,7 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  resetToDefault() {
+  resetChanges() {
     this.formGroup.patchValue({
       photoUrl: this.account.photoUrl
     });

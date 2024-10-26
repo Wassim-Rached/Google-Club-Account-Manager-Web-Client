@@ -56,7 +56,6 @@ export class AuthService {
       }),
       catchError((error) => {
         console.error(error);
-        this.logout();
         return throwError(error);
       })
     );
@@ -65,6 +64,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.currentAccountSubject.next(null);
+    this.toastrService.info('Logged out');
   }
 
   private saveToken(token: string) {

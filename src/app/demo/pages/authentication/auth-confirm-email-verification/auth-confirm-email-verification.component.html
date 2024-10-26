@@ -39,7 +39,7 @@
             <p class="mb-2 text-muted">
               <a [routerLink]="['/auth/signup']">Go to Signup</a>
             </p>
-            <p class="mb-0 text-muted">
+            <p class="mb-0 text-muted" *ngIf="verificationStatus !== 'success'">
               Didn't receive verification email?
               <a [routerLink]="['/auth/resend-email-verification']">Resend</a>
             </p>

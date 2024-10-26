@@ -29,6 +29,7 @@ export default class AuthSignupComponent implements OnInit {
     this.formGroup = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue])
     });
 
@@ -38,6 +39,17 @@ export default class AuthSignupComponent implements OnInit {
 
   onSignup() {
     if (!this.formGroup.valid || this.isSubmitting) return;
+
+    if (this.formGroup.value.password !== this.formGroup.value.confirmPassword) {
+      this.toastrService.error('Passwords do not match');
+      return;
+    }
+
+    const passwordStrengthError = AccountsService.validatePasswordStrength(this.formGroup.value.password);
+    if (passwordStrengthError) {
+      this.toastrService.error(passwordStrengthError);
+      return;
+    }
 
     // remove the Terms and Conditions checkbox
     this.formGroup.removeControl('terms');
@@ -57,7 +69,9 @@ export default class AuthSignupComponent implements OnInit {
           window.location.href = this.redirect;
           return;
         }
-        this.router.navigate([this.redirect]);
+        this.router.navigate([this.redirect]).then(() => {
+          this.toastrService.info('Redirected to singin page');
+        });
       },
       error: (error) => {
         this.isSubmitting = false;

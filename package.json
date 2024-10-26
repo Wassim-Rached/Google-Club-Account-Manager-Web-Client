@@ -24,6 +24,7 @@
     "@angular/router": "^18.0.5",
     "@ng-bootstrap/ng-bootstrap": "^17.0.0",
     "@popperjs/core": "^2.11.8",
+    "mermaid": "^10.9.3",
     "apexcharts": "^3.49.2",
     "bootstrap": "^5.3.3",
     "ng-apexcharts": "^1.11.0",

@@ -32,6 +32,10 @@ export const authInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, ne
           // router.navigate(['/login']); // Uncomment this line if you want to redirect
           break;
         case 401:
+          // if the current request is a sign in request, do not show the error
+          if (request.url.includes('api/token')) {
+            break;
+          }
           toastrService.error('Unauthorized');
           // Optionally redirect to login or another page
           // router.navigate(['/login']); // Uncomment this line if you want to redirect

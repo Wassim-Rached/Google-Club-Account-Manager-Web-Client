@@ -6,20 +6,80 @@
   </div>
 </ng-template>
 
+<ng-template #diagram>
+  <app-authorities-diagram [authorities]="diagramAuthorities" />
+</ng-template>
+
 <ng-template #page>
   <ng-container *ngIf="account; else loading">
     <div class="profile-overview">
-      <div class="profile-header text-center mb-4">
-        <img [src]="account.photoUrl" alt="Profile Photo" class="profile-photo rounded-circle mb-3" style="width: 150px; height: 150px" />
-        <h4>
-          {{ account.email }}
-          <i *ngIf="account.isEmailVerified" class="fa fa-check-circle text-success"></i>
-        </h4>
-        <p>Joined on: {{ account.createdAt | date }}</p>
-        <p>
-          Membership: {{ account.isMember ? 'Member' : 'Non-Member' }}
-          <i *ngIf="account.isMember" class="fa fa-star text-warning"></i>
-        </p>
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="d-flex align-items-center mb-3 mb-md-0">
+          <img
+            [src]="account.photoUrl"
+            alt="Account Photo"
+            class="rounded-circle"
+            style="width: 60px; height: 60px; margin-right: 15px; border: 2px solid #ddd"
+          />
+          <div>
+            <h5 class="mb-0">
+              {{ account.email }}
+            </h5>
+            <div class="text-muted mt-1" style="font-size: 0.8em">
+              <small>
+                <i class="fas fa-calendar-alt me-1"></i>
+                Joined at: {{ account.createdAt | date: 'mediumDate' }}
+              </small>
+            </div>
+            <div class="d-flex flex-row align-items-center ml-2 mt-2">
+              <i
+                *ngIf="account.isEmailVerified"
+                class="fas fa-check-circle text-success"
+                title="Email Verified"
+                style="font-size: 1em; margin-left: 0.5rem"
+              ></i>
+              <i
+                *ngIf="account.isLocked"
+                class="fas fa-lock text-danger"
+                title="Account Locked"
+                style="font-size: 1em; margin-left: 0.5rem"
+              ></i>
+              <i
+                *ngIf="account.isIdentityVerified"
+                class="fas fa-id-card text-primary"
+                title="Identity Verified"
+                style="font-size: 1em; margin-left: 0.5rem"
+              ></i>
+              <i
+                [ngClass]="account.isMember ? 'fas fa-user-check text-success' : 'fas fa-user-times text-danger'"
+                [title]="account.isMember ? 'Member' : 'Non Member'"
+                style="font-size: 1em; margin-left: 0.5rem"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" (click)="refreshAccount()" class="btn btn-sm btn-outline-secondary d-flex align-items-center">
+          <i class="fas fa-sync-alt mr-2"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+
+      <div ngbAccordion class="mb-3">
+        <div ngbAccordionItem>
+          <h2 ngbAccordionHeader></h2>
+          <button ngbAccordionButton>
+            <i class="fas fa-users me-2"></i>
+            <span>Authorities</span>
+          </button>
+          <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+              <ng-container *ngIf="diagramAuthorities; else loading">
+                <ng-container *ngTemplateOutlet="diagram" />
+              </ng-container>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-sm-12">
         <div class="card">
@@ -27,36 +87,29 @@
             <h5 class="mb-3">Actions</h5>
             <ul class="nav nav-tabs mb-3" ngbNav #nav="ngbNav">
               <li class="nav-item" [ngbNavItem]="1">
-                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Change Password</a>
-                <ng-template ngbNavContent>
-                  <app-change-password />
-                </ng-template>
-              </li>
-              <li class="nav-item" [ngbNavItem]="2">
                 <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Edit Profile</a>
                 <ng-template ngbNavContent>
                   <app-edit-profile [account]="account" />
                 </ng-template>
               </li>
-              <li class="nav-item" [ngbNavItem]="3">
-                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Request verification</a>
+
+              <li class="nav-item" [ngbNavItem]="2">
+                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Change Password</a>
                 <ng-template ngbNavContent>
-                  <p class="mb-0">
-                    request verification
-                    <i *ngIf="account.isEmailVerified" class="fa fa-check-circle text-success"></i>
-                  </p>
+                  <app-change-password />
+                </ng-template>
+              </li>
+
+              <li class="nav-item" [ngbNavItem]="3">
+                <a class="nav-link text-uppercase" aria-controls="home" aria-selected="true" ngbNavLink>Delete Account</a>
+                <ng-template ngbNavContent>
+                  <app-delete-my-account />
                 </ng-template>
               </li>
             </ul>
             <div [ngbNavOutlet]="nav"></div>
           </div>
         </div>
-      </div>
-      <div class="authorities">
-        <h3>Authorities</h3>
-        <ul>
-          <li *ngFor="let authority of authorities">{{ authority }}</li>
-        </ul>
       </div>
     </div>
   </ng-container>

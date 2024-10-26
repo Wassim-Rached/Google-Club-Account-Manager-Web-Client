@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <div class="form-group">
+    <label for="deletePassword" class="form-label">Enter Password to Delete Account</label>
+    <input id="deletePassword" type="password" class="form-control" [(ngModel)]="deletePassword" (keydown.enter)="deleteMyAccount()" />
+  </div>
+
+  <div class="mt-3 d-flex justify-content-end">
+    <button
+      type="button"
+      (click)="deleteMyAccount()"
+      [disabled]="isSubmitting || !deletePassword"
+      class="btn btn-danger d-flex align-items-center"
+    >
+      <span>{{ isSubmitting ? 'Deleting Account...' : 'Delete Account' }}</span>
+      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>

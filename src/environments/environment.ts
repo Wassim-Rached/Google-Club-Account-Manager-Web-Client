@@ -2,13 +2,15 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { Environment } from 'src/types';
 import packageInfo from '../../package.json';
 
-export const environment = {
+export const environment: Environment = {
   appVersion: packageInfo.version,
   production: true,
   defaultPhotoUrl: 'assets/images/user/avatar-2.jpg',
   requireStrongPassword: false,
+  termsAndConditionsUrl: 'https://example.com',
 
   // central authentication service
   cas: 'https://cas-server.azurewebsites.net',

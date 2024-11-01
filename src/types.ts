@@ -7,3 +7,13 @@ export interface Page<T> {
     totalPages: number;
   };
 }
+
+export type Environment = {
+  appVersion: string;
+  production: boolean;
+  defaultPhotoUrl: string;
+  requireStrongPassword: boolean;
+  termsAndConditionsUrl: string;
+  cas: string;
+  ics: string;
+};

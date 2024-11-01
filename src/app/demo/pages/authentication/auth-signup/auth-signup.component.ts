@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-auth-signup',
@@ -19,7 +19,6 @@ export default class AuthSignupComponent implements OnInit {
   isSubmitting = false;
 
   constructor(
-    private http: HttpClient,
     private router: Router,
     private accountService: AccountsService,
     private toastrService: ToastrService
@@ -45,10 +44,12 @@ export default class AuthSignupComponent implements OnInit {
       return;
     }
 
-    const passwordStrengthError = AccountsService.validatePasswordStrength(this.formGroup.value.password);
-    if (passwordStrengthError) {
-      this.toastrService.error(passwordStrengthError);
-      return;
+    if (environment.requireStrongPassword) {
+      const passwordStrengthError = AccountsService.validatePasswordStrength(this.formGroup.value.password);
+      if (passwordStrengthError) {
+        this.toastrService.error(passwordStrengthError);
+        return;
+      }
     }
 
     // remove the Terms and Conditions checkbox

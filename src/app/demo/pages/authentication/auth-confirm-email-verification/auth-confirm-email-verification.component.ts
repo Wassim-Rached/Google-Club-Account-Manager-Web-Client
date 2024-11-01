@@ -14,6 +14,7 @@ export default class AuthConfirmEmailVerificationComponent implements OnInit {
   token: string;
   isVerifying = false;
   verificationStatus: 'not_found' | 'success';
+  message: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,9 +32,10 @@ export default class AuthConfirmEmailVerificationComponent implements OnInit {
 
     this.isVerifying = true;
     this.accountsService.verifyEmail(token).subscribe({
-      next: (_) => {
+      next: (message) => {
         this.isVerifying = false;
         this.verificationStatus = 'success';
+        this.message = message;
       },
       error: (error) => {
         console.error(error);

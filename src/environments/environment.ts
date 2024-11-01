@@ -7,12 +7,16 @@ import packageInfo from '../../package.json';
 export const environment = {
   appVersion: packageInfo.version,
   production: true,
+  defaultPhotoUrl: 'assets/images/user/avatar-2.jpg',
+  requireStrongPassword: false,
+
+  // central authentication service
   cas: 'https://cas-server.azurewebsites.net',
   // cas: 'http://localhost:3001',
-  ics: 'http://localhost:8080',
-  // ics: 'https://ics-server.azurewebsites.net',
 
-  defaultPhotoUrl: 'assets/images/user/avatar-2.jpg'
+  // identity and access control service
+  // ics: 'https://ics-server.azurewebsites.net'
+  ics: 'http://localhost:8080'
 };
 /*
  * For easier debugging in development mode, you can import the following file

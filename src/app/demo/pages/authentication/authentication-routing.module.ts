@@ -14,12 +14,20 @@ const routes: Routes = [
         loadComponent: () => import('./auth-signup/auth-signup.component')
       },
       {
-        path: 'resend-email-verification',
+        path: 'email-verification/resend',
         loadComponent: () => import('./auth-resend-email-verification/auth-resend-email-verification.component')
       },
       {
-        path: 'confirm-email-verification',
+        path: 'email-verification/confirm',
         loadComponent: () => import('./auth-confirm-email-verification/auth-confirm-email-verification.component')
+      },
+      {
+        path: 'reset-password/resend',
+        loadComponent: () => import('./auth-resend-password-verification/auth-resend-password-verification.component')
+      },
+      {
+        path: 'reset-password/confirm',
+        loadComponent: () => import('./auth-reset-password/auth-reset-password.component')
       },
       {
         path: '**',

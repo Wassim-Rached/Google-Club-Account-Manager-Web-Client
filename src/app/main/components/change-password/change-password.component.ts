@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-change-password',
@@ -40,10 +41,12 @@ export class ChangePasswordComponent implements OnInit {
     const oldPassword: string = this.formGroup.get('oldPassword').value;
     const newPassword: string = this.formGroup.get('newPassword').value;
 
-    const passwordStrengthError = AccountsService.validatePasswordStrength(newPassword);
-    if (passwordStrengthError) {
-      this.toastrService.error(passwordStrengthError);
-      return;
+    if (environment.requireStrongPassword) {
+      const passwordStrengthError = AccountsService.validatePasswordStrength(newPassword);
+      if (passwordStrengthError) {
+        this.toastrService.error(passwordStrengthError);
+        return;
+      }
     }
 
     const payload = { oldPassword, newPassword };

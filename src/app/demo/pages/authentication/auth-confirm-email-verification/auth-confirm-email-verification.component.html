@@ -27,7 +27,7 @@
             </div>
             <h3 class="mb-4">Email Verification</h3>
             <div *ngIf="verificationStatus === 'success'" class="alert alert-success" role="alert">
-              Your email has been successfully verified!
+              {{ message }}
             </div>
             <div *ngIf="verificationStatus === 'not_found'" class="alert alert-danger" role="alert">Verification token not found.</div>
             <div class="mt-4">

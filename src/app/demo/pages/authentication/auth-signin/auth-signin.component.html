@@ -29,7 +29,7 @@
         </button>
         <p class="mb-2 text-muted">
           Forgot password?
-          <a [routerLink]="['/auth/reset-password']">Reset</a>
+          <a [routerLink]="['/auth/reset-password/resend']">Reset</a>
         </p>
         <p class="mb-0 text-muted">
           Don’t have an account?
@@ -37,7 +37,7 @@
         </p>
         <p class="mb-0 text-muted">
           Didn't receive verification email?
-          <a [routerLink]="['/auth/resend-email-verification']">Resend</a>
+          <a [routerLink]="['/auth/email-verification/resend']">Resend</a>
         </p>
       </div>
     </form>

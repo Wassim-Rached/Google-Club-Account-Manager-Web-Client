@@ -86,7 +86,7 @@ export default class AuthSignupComponent implements OnInit {
     });
   }
 
-  termsAndConditionsUrl() {
+  get termsAndConditionsUrl() {
     return environment.termsAndConditionsUrl;
   }
 }

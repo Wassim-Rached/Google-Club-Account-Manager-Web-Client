@@ -9,7 +9,7 @@ export const environment: Environment = {
   termsAndConditionsUrl: 'https://example.com',
 
   // central authentication service
-  cas: 'https://cas-server.azurewebsites.net',
+  cas: 'https://cas-server-2.azurewebsites.net',
   // identity and access control service
-  ics: 'https://ics-server.azurewebsites.net'
+  ics: 'https://ics-server-2.azurewebsites.net'
 };
